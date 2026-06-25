@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { projects } from "@/lib/projects";
+import { assetPath } from "@/lib/assets";
 import { ArrowUpRight, CloseIcon, MenuIcon, Spark } from "@/components/icons";
 
 const nav = [
@@ -163,7 +164,7 @@ export function Header() {
                       >
                         <div className="relative aspect-[16/9] overflow-hidden rounded-[1.35rem] bg-white/[.03]">
                           <Image
-                            src={project.screenshot}
+                            src={assetPath(project.screenshot)}
                             alt={project.title}
                             fill
                             sizes="(min-width: 1024px) 420px, 100vw"

@@ -7,6 +7,7 @@ import { ArrowRight, ArrowUpRight, Spark } from "@/components/icons";
 import { PremiumButton } from "@/components/premium-button";
 import { Reveal } from "@/components/reveal";
 import { getProject, projects } from "@/lib/projects";
+import { assetPath } from "@/lib/assets";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -77,7 +78,7 @@ export default async function ProjectPage({ params }: Props) {
             <div className="glass relative overflow-hidden rounded-[2.4rem] p-3 sm:p-4">
               <div className="relative aspect-[16/10] overflow-hidden rounded-[1.8rem] bg-white/[.03]">
                 <Image
-                  src={project.screenshot}
+                  src={assetPath(project.screenshot)}
                   alt={`${project.title} screenshot`}
                   fill
                   priority
@@ -140,7 +141,7 @@ export default async function ProjectPage({ params }: Props) {
             <Reveal delay={0.1}>
               <div className="glass overflow-hidden rounded-[2rem] p-3">
                 <div className="relative aspect-[16/9] overflow-hidden rounded-[1.5rem]">
-                  <Image src={project.screenshot} alt={`${project.title} wide preview`} fill sizes="(min-width: 1024px) 760px, 100vw" className="object-cover object-top" />
+                  <Image src={assetPath(project.screenshot)} alt={`${project.title} wide preview`} fill sizes="(min-width: 1024px) 760px, 100vw" className="object-cover object-top" />
                 </div>
               </div>
             </Reveal>
@@ -148,7 +149,7 @@ export default async function ProjectPage({ params }: Props) {
               <Reveal delay={0.14}>
                 <div className="glass overflow-hidden rounded-[2rem] p-3">
                   <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
-                    <Image src={project.screenshot} alt={`${project.title} cropped preview`} fill sizes="(min-width: 768px) 380px, 100vw" className="object-cover object-left-top" />
+                    <Image src={assetPath(project.screenshot)} alt={`${project.title} cropped preview`} fill sizes="(min-width: 768px) 380px, 100vw" className="object-cover object-left-top" />
                   </div>
                 </div>
               </Reveal>
@@ -197,7 +198,7 @@ export default async function ProjectPage({ params }: Props) {
         <Reveal>
           <Link href={`/projects/${nextProject.slug}`} className="group glass-gold relative block overflow-hidden rounded-[2.4rem] p-8 sm:p-12">
             <div className="absolute right-0 top-0 h-full w-1/2 opacity-35">
-              <Image src={nextProject.screenshot} alt={nextProject.title} fill sizes="50vw" className="object-cover object-top" />
+              <Image src={assetPath(nextProject.screenshot)} alt={nextProject.title} fill sizes="50vw" className="object-cover object-top" />
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
             </div>
             <div className="relative z-10 max-w-2xl">

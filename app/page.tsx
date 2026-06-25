@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight, CodeIcon, OrbitIcon, ShieldIcon, Spark, Teleg
 import { PremiumButton } from "@/components/premium-button";
 import { Reveal } from "@/components/reveal";
 import { featuredProjects, services, technologies } from "@/lib/projects";
+import { assetPath } from "@/lib/assets";
 
 const process = [
   { step: "01", title: "Анализ", text: "Изучаю задачу, аудиторию, бизнес-цели и ограничения проекта." },
@@ -151,7 +152,7 @@ export default function Home() {
               <Link href={`/projects/${project.slug}`} className="group glass relative block h-full overflow-hidden rounded-[2rem] p-3 transition duration-500 hover:-translate-y-2 hover:border-gold/25 hover:shadow-gold">
                 <div className="relative aspect-[1.18] overflow-hidden rounded-[1.55rem] bg-white/[.025]">
                   <Image
-                    src={project.screenshot}
+                    src={assetPath(project.screenshot)}
                     alt={`${project.title} screenshot`}
                     fill
                     sizes="(min-width: 1280px) 420px, (min-width: 768px) 50vw, 100vw"
@@ -169,7 +170,7 @@ export default function Home() {
                   <div className="mb-4 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
                       <span className="grid size-9 place-items-center overflow-hidden rounded-xl border border-white/10 bg-white/90">
-                        <Image src={project.favicon} alt="" width={22} height={22} className="max-h-6 max-w-6 object-contain" />
+                        <Image src={assetPath(project.favicon)} alt="" width={22} height={22} className="max-h-6 max-w-6 object-contain" />
                       </span>
                       <div>
                         <h3 className="text-lg font-medium tracking-[-0.04em] text-white">{project.title}</h3>
