@@ -38,37 +38,33 @@ export default async function ProjectPage({ params }: Props) {
   const nextProject = projects[(currentIndex + 1) % projects.length];
 
   return (
-    <main className="overflow-hidden bg-[#050505] pt-28 text-white sm:pt-36">
+    <main className="overflow-hidden bg-[#050505] pt-32 text-white sm:pt-40">
       <GsapEffects />
 
-      <section className="container-premium pb-12 sm:pb-20">
+      <section className="container-premium pb-16 sm:pb-24">
         <Reveal>
-          <Link href="/#projects" className="mono mb-8 inline-flex text-xs uppercase text-white/50 underline underline-offset-4 hover:text-white">
-            ← Все проекты
+          <Link href="/#projects" className="label mb-9 inline-flex underline underline-offset-4 hover:text-white">
+            ← Назад к работам
           </Link>
         </Reveal>
 
-        <div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
+        <div className="grid gap-12 lg:grid-cols-[.88fr_1.12fr] lg:items-end">
           <div>
             <Reveal>
-              <div className="grid grid-cols-[5rem_1fr] border-y border-white/20 py-4 mono text-xs uppercase text-white/50 sm:grid-cols-[8rem_1fr]">
+              <div className="mb-7 flex max-w-lg items-center justify-between border-b border-t border-white/10 py-3 mono text-[11px] uppercase text-white/45">
                 <span>{String(currentIndex + 1).padStart(2, "0")}</span>
                 <span>{project.type} / {project.year}</span>
               </div>
-              <h1 className="mt-8 text-[18vw] font-semibold leading-[.82] tracking-[-0.11em] sm:text-8xl lg:text-[8.5rem]">
-                {project.title}
-              </h1>
-              <p className="mt-7 max-w-2xl text-xl leading-8 tracking-[-0.045em] text-white/65 sm:text-2xl sm:leading-9">
-                {project.description}
-              </p>
+              <h1 className="display-xl max-w-5xl">{project.title}</h1>
+              <p className="body-copy mt-8 max-w-2xl">{project.description}</p>
             </Reveal>
 
             <Reveal delay={0.1}>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link href={project.url} target="_blank" className="border border-white bg-white px-6 py-4 mono text-xs uppercase text-black transition hover:bg-transparent hover:text-white">
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <Link href={project.url} target="_blank" className="inline-flex h-12 items-center justify-center bg-white px-5 mono text-[11px] uppercase text-black transition hover:bg-white/85">
                   Открыть проект →
                 </Link>
-                <Link href="https://t.me/fuckbuild" target="_blank" className="border border-white/25 px-6 py-4 mono text-xs uppercase text-white transition hover:bg-white hover:text-black">
+                <Link href="https://t.me/fuckbuild" target="_blank" className="inline-flex h-12 items-center justify-center border border-white/15 px-5 mono text-[11px] uppercase text-white/75 transition hover:border-white hover:bg-white hover:text-black">
                   Обсудить похожий →
                 </Link>
               </div>
@@ -76,12 +72,12 @@ export default async function ProjectPage({ params }: Props) {
           </div>
 
           <Reveal delay={0.08}>
-            <div className="border border-white/20 p-4">
-              <div className="mb-4 flex justify-between mono text-xs uppercase text-white/45">
+            <div className="border border-white/10 bg-[#0b0b0b] p-3 shadow-[0_40px_140px_rgba(0,0,0,.65)]">
+              <div className="flex items-center justify-between border-b border-white/10 px-2 py-2 mono text-[11px] uppercase text-white/40">
                 <span>Live capture</span>
-                <span>Grayscale preview</span>
+                <span>Case screen</span>
               </div>
-              <div className="relative aspect-[16/10] overflow-hidden bg-white/5">
+              <div className="relative aspect-[16/10] overflow-hidden bg-white">
                 <Image
                   src={assetPath(project.screenshot)}
                   alt={`${project.title} screenshot`}
@@ -96,14 +92,14 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="invert-section py-12 sm:py-16">
+      <section className="paper py-16 sm:py-20">
         <div className="container-premium">
           <Reveal>
-            <div className="grid gap-px bg-black/20 md:grid-cols-3">
+            <div className="grid gap-px bg-black/10 md:grid-cols-3">
               {project.metrics.map((metric) => (
-                <div key={metric.label} className="bg-[#f4f4f1] p-8 text-center">
-                  <div className="mono text-5xl tracking-[-0.08em]">{metric.value}</div>
-                  <div className="mt-3 mono text-xs uppercase text-black/45">{metric.label}</div>
+                <div key={metric.label} className="bg-white p-8">
+                  <div className="mono text-4xl tracking-[-0.08em]">{metric.value}</div>
+                  <div className="mt-3 mono text-[11px] uppercase text-black/45">{metric.label}</div>
                 </div>
               ))}
             </div>
@@ -111,19 +107,19 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="invert-section py-12 sm:py-20">
+      <section className="paper pb-20 sm:pb-28">
         <div className="container-premium">
-          <div className="border-t border-black/20">
+          <div className="divide-y divide-black/10 border-y border-black/10">
             {[
               ["Задача", project.task],
               ["Решение", project.solution],
               ["Результат", project.result],
             ].map(([title, text], index) => (
-              <Reveal key={title} delay={index * 0.05}>
-                <article className="grid gap-5 border-b border-black/20 py-8 lg:grid-cols-[9rem_.45fr_1fr]">
-                  <span className="mono text-sm text-black/45">0{index + 1}</span>
-                  <h2 className="text-4xl font-semibold tracking-[-0.08em]">{title}</h2>
-                  <p className="max-w-3xl text-base leading-7 text-black/60">{text}</p>
+              <Reveal key={title} delay={index * 0.04}>
+                <article className="grid gap-5 py-9 lg:grid-cols-[7rem_.36fr_1fr] lg:items-start">
+                  <span className="mono text-sm text-black/38">0{index + 1}</span>
+                  <h2 className="text-4xl font-medium tracking-[-0.08em] sm:text-5xl">{title}</h2>
+                  <p className="max-w-3xl text-base leading-7 text-black/58">{text}</p>
                 </article>
               </Reveal>
             ))}
@@ -131,37 +127,37 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="py-12 sm:py-20">
-        <div className="container-premium grid gap-8 lg:grid-cols-[.65fr_1fr]">
+      <section className="py-20 sm:py-28">
+        <div className="container-premium grid gap-12 lg:grid-cols-[.7fr_1fr]">
           <Reveal>
-            <span className="section-label">Screens / System</span>
-            <h2 className="h2-system mt-4">Единая подача без цветового шума.</h2>
-            <p className="body-system mt-6 max-w-lg">
-              Для портфолио экраны намеренно сведены в монохром: фокус остаётся на структуре, сетке и качестве реализации.
+            <span className="label">Screens</span>
+            <h2 className="display-lg mt-5">Экран как часть системы.</h2>
+            <p className="body-copy mt-6 max-w-lg">
+              В кейсе показаны реальные экраны проекта. Подача сведена к монохрому, чтобы фокус остался на структуре и качестве интерфейса.
             </p>
           </Reveal>
 
           <div className="grid gap-4">
-            <Reveal delay={0.1}>
-              <div className="border border-white/20 p-4">
-                <div className="relative aspect-[16/9] overflow-hidden bg-white/5">
-                  <Image src={assetPath(project.screenshot)} alt={`${project.title} wide preview`} fill sizes="(min-width: 1024px) 800px, 100vw" className="bw-img object-cover object-top" />
+            <Reveal delay={0.08}>
+              <div className="border border-white/10 bg-[#0b0b0b] p-3">
+                <div className="relative aspect-[16/9] overflow-hidden bg-white">
+                  <Image src={assetPath(project.screenshot)} alt={`${project.title} wide preview`} fill sizes="(min-width: 1024px) 820px, 100vw" className="bw-img object-cover object-top" />
                 </div>
               </div>
             </Reveal>
             <div className="grid gap-4 md:grid-cols-2">
-              <Reveal delay={0.14}>
-                <div className="border border-white/20 p-4">
-                  <div className="relative aspect-[4/5] overflow-hidden bg-white/5">
-                    <Image src={assetPath(project.screenshot)} alt={`${project.title} crop`} fill sizes="(min-width: 768px) 400px, 100vw" className="bw-img object-cover object-left-top" />
+              <Reveal delay={0.12}>
+                <div className="border border-white/10 bg-[#0b0b0b] p-3">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-white">
+                    <Image src={assetPath(project.screenshot)} alt={`${project.title} crop`} fill sizes="(min-width: 768px) 420px, 100vw" className="bw-img object-cover object-left-top" />
                   </div>
                 </div>
               </Reveal>
-              <Reveal delay={0.18}>
-                <div className="flex min-h-[320px] flex-col justify-between border border-white/20 p-6">
-                  <p className="section-label">Build notes</p>
+              <Reveal delay={0.16}>
+                <div className="flex min-h-[320px] flex-col justify-between border border-white/10 bg-[#0b0b0b] p-6">
+                  <p className="label">Build notes</p>
                   <div>
-                    <h3 className="text-4xl font-semibold tracking-[-0.08em]">{project.type}</h3>
+                    <h3 className="text-4xl font-medium tracking-[-0.08em]">{project.type}</h3>
                     <p className="mt-4 text-sm leading-6 text-white/55">{project.short}</p>
                   </div>
                 </div>
@@ -171,17 +167,17 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="invert-section py-12 sm:py-20">
+      <section className="paper py-20 sm:py-24">
         <div className="container-premium">
           <Reveal>
-            <div className="grid gap-8 border-y border-black/20 py-8 lg:grid-cols-[.5fr_1fr] lg:items-center">
+            <div className="grid gap-8 border-y border-black/10 py-8 lg:grid-cols-[.46fr_1fr] lg:items-center">
               <div>
-                <span className="section-label-dark">Stack / Services</span>
-                <h2 className="mt-4 text-5xl font-semibold leading-[.9] tracking-[-0.08em] sm:text-7xl">Что использовано</h2>
+                <span className="label-dark">Stack</span>
+                <h2 className="display-md mt-4">Что внутри</h2>
               </div>
               <div className="flex flex-wrap gap-2">
                 {[...project.technologies, ...project.services].map((item) => (
-                  <span key={item} className="border border-black/20 px-4 py-3 mono text-xs uppercase text-black/65">
+                  <span key={item} className="border border-black/10 bg-white px-4 py-3 mono text-[11px] uppercase text-black/58">
                     {item}
                   </span>
                 ))}
@@ -191,17 +187,17 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="py-14 sm:py-24">
+      <section className="py-20 sm:py-28">
         <div className="container-premium">
           <Reveal>
-            <Link href={`/projects/${nextProject.slug}`} className="group grid gap-6 border-y border-white/20 py-8 lg:grid-cols-[.7fr_1fr] lg:items-end">
+            <Link href={`/projects/${nextProject.slug}`} className="group grid gap-8 border-y border-white/10 py-10 lg:grid-cols-[.65fr_1fr] lg:items-end">
               <div>
-                <p className="section-label">Следующий кейс</p>
-                <h2 className="mt-4 text-[16vw] font-semibold leading-[.82] tracking-[-0.1em] sm:text-8xl">{nextProject.title}</h2>
+                <p className="label">Следующий кейс</p>
+                <h2 className="display-lg mt-4">{nextProject.title}</h2>
               </div>
-              <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
-                <p className="body-system max-w-xl">{nextProject.short}</p>
-                <span className="mono text-xs uppercase text-white transition group-hover:translate-x-1">Смотреть →</span>
+              <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-end">
+                <p className="body-copy max-w-xl">{nextProject.short}</p>
+                <span className="mono text-[11px] uppercase text-white transition group-hover:translate-x-1">Смотреть →</span>
               </div>
             </Link>
           </Reveal>

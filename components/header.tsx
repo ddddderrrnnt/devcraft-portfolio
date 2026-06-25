@@ -8,12 +8,11 @@ import { projects } from "@/lib/projects";
 import { assetPath } from "@/lib/assets";
 
 const nav = [
-  { label: "HOME", href: "/#home", meta: "Главная" },
-  { label: "PROJECTS", href: "/#projects", meta: "Реальные работы" },
-  { label: "SERVICES", href: "/#services", meta: "Что делаю" },
-  { label: "PROCESS", href: "/#process", meta: "Как работаю" },
-  { label: "STACK", href: "/#stack", meta: "Технологии" },
-  { label: "CONTACT", href: "/#contact", meta: "Связь" },
+  { label: "Главная", href: "/#home" },
+  { label: "Работы", href: "/#projects" },
+  { label: "Услуги", href: "/#services" },
+  { label: "Процесс", href: "/#process" },
+  { label: "Контакты", href: "/#contact" },
 ];
 
 export function Header() {
@@ -21,7 +20,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 18);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -37,32 +36,36 @@ export function Header() {
   return (
     <>
       <motion.header
-        initial={{ y: -22, opacity: 0 }}
+        initial={{ y: -18, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
         className="fixed left-0 right-0 top-0 z-50"
       >
         <div className="container-premium py-4">
-          <div className={`grid grid-cols-[1fr_auto_1fr] items-center border px-4 py-3 transition duration-300 ${scrolled ? "border-white/20 bg-black/82 backdrop-blur-xl" : "border-white/10 bg-black/20"}`}>
-            <Link href="/#home" className="mono text-sm font-semibold uppercase tracking-[-0.04em]">
-              DEVCRAFT
+          <div className={`flex items-center justify-between border px-4 py-3 transition duration-300 ${scrolled ? "border-white/10 bg-black/80 backdrop-blur-xl" : "border-white/10 bg-black/35 backdrop-blur-sm"}`}>
+            <Link href="/#home" className="flex items-center gap-3" aria-label="DevCraft home">
+              <span className="block size-2 rounded-full bg-white" />
+              <span className="mono text-xs font-semibold uppercase tracking-[0.08em]">DevCraft</span>
             </Link>
-            <nav className="hidden gap-8 mono text-[11px] uppercase tracking-[0.18em] text-white/50 lg:flex">
-              <Link href="/#projects" className="transition hover:text-white">Работы</Link>
-              <Link href="/#services" className="transition hover:text-white">Услуги</Link>
-              <Link href="/#process" className="transition hover:text-white">Процесс</Link>
-              <Link href="/#contact" className="transition hover:text-white">Контакты</Link>
+
+            <nav className="hidden items-center gap-8 mono text-[11px] uppercase tracking-[0.16em] text-white/45 lg:flex">
+              {nav.slice(1).map((item) => (
+                <Link key={item.href} href={item.href} className="transition hover:text-white">
+                  {item.label}
+                </Link>
+              ))}
             </nav>
-            <div className="flex justify-end gap-3">
-              <Link href="https://t.me/fuckbuild" target="_blank" className="hidden border border-white/20 px-4 py-2 mono text-xs uppercase text-white/70 transition hover:bg-white hover:text-black sm:block">
-                Написать
+
+            <div className="flex items-center gap-2">
+              <Link href="https://t.me/fuckbuild" target="_blank" className="hidden border border-white/10 px-4 py-2 mono text-[11px] uppercase text-white/65 transition hover:border-white hover:bg-white hover:text-black sm:block">
+                Telegram
               </Link>
               <button
                 onClick={() => setOpen(true)}
-                className="border border-white/20 px-4 py-2 mono text-xs uppercase text-white transition hover:bg-white hover:text-black"
+                className="border border-white/10 px-4 py-2 mono text-[11px] uppercase text-white/80 transition hover:border-white hover:bg-white hover:text-black"
                 aria-label="Открыть меню"
               >
-                MENU
+                Menu
               </button>
             </div>
           </div>
@@ -72,35 +75,39 @@ export function Header() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-[80] overflow-y-auto bg-[#f4f4f1] text-black"
+            className="fixed inset-0 z-[80] overflow-y-auto bg-[#f5f5f2] text-black"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
           >
             <div className="container-premium min-h-dvh py-4">
-              <div className="grid grid-cols-[1fr_auto] border border-black/20 px-4 py-3">
-                <Link href="/#home" onClick={() => setOpen(false)} className="mono text-sm font-semibold uppercase">DEVCRAFT</Link>
-                <button onClick={() => setOpen(false)} className="mono text-xs uppercase underline underline-offset-4">Close</button>
+              <div className="flex items-center justify-between border border-black/10 px-4 py-3">
+                <Link href="/#home" onClick={() => setOpen(false)} className="flex items-center gap-3">
+                  <span className="block size-2 rounded-full bg-black" />
+                  <span className="mono text-xs font-semibold uppercase tracking-[0.08em]">DevCraft</span>
+                </Link>
+                <button onClick={() => setOpen(false)} className="mono text-[11px] uppercase text-black/55 underline underline-offset-4 hover:text-black">
+                  Close
+                </button>
               </div>
 
-              <div className="grid gap-8 py-10 lg:grid-cols-[1.05fr_.95fr] lg:py-16">
+              <div className="grid gap-10 py-10 lg:grid-cols-[.92fr_1.08fr] lg:py-16">
                 <div>
-                  <p className="section-label-dark mb-8">Navigation / Index</p>
-                  <div className="border-t border-black/20">
+                  <p className="label-dark mb-8">Navigation</p>
+                  <div className="space-y-2">
                     {nav.map((item, index) => (
                       <motion.div
-                        key={item.label}
-                        initial={{ y: 26, opacity: 0 }}
+                        key={item.href}
+                        initial={{ y: 24, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: 12, opacity: 0 }}
-                        transition={{ delay: index * 0.035, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ delay: index * 0.04, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                       >
-                        <Link href={item.href} onClick={() => setOpen(false)} className="group grid grid-cols-[4.5rem_1fr] items-end border-b border-black/20 py-4 sm:grid-cols-[7rem_1fr]">
-                          <span className="mono pb-2 text-xs text-black/45">{String(index + 1).padStart(2, "0")}</span>
-                          <span>
-                            <span className="block text-[13vw] font-semibold leading-[.8] tracking-[-0.1em] transition group-hover:translate-x-3 sm:text-7xl lg:text-8xl">{item.label}</span>
-                            <span className="mono mt-2 block text-xs uppercase text-black/45">{item.meta}</span>
+                        <Link href={item.href} onClick={() => setOpen(false)} className="group grid grid-cols-[3.5rem_1fr] items-baseline border-b border-black/10 py-4">
+                          <span className="mono text-xs text-black/35">{String(index + 1).padStart(2, "0")}</span>
+                          <span className="text-6xl font-medium leading-none tracking-[-0.085em] transition group-hover:translate-x-2 sm:text-8xl">
+                            {item.label}
                           </span>
                         </Link>
                       </motion.div>
@@ -109,20 +116,20 @@ export function Header() {
                 </div>
 
                 <motion.div
-                  initial={{ x: 28, opacity: 0 }}
+                  initial={{ x: 24, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ x: 16, opacity: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                  className="grid gap-3 sm:grid-cols-2"
+                  transition={{ duration: 0.65, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  className="grid gap-4 sm:grid-cols-2"
                 >
                   {projects.slice(0, 4).map((project, index) => (
-                    <Link key={project.slug} href={`/projects/${project.slug}`} onClick={() => setOpen(false)} className={`group border border-black/20 bg-black text-white ${index === 0 ? "sm:col-span-2" : ""}`}>
-                      <div className="relative aspect-[16/9] overflow-hidden">
-                        <Image src={assetPath(project.screenshot)} alt={project.title} fill sizes="(min-width: 1024px) 520px, 100vw" className="bw-img object-cover object-top opacity-80 transition duration-700 group-hover:scale-105 group-hover:opacity-100" />
+                    <Link key={project.slug} href={`/projects/${project.slug}`} onClick={() => setOpen(false)} className={`group border border-black/10 bg-white p-3 ${index === 0 ? "sm:col-span-2" : ""}`}>
+                      <div className="relative aspect-[16/9] overflow-hidden bg-black">
+                        <Image src={assetPath(project.screenshot)} alt={project.title} fill sizes="(min-width: 1024px) 580px, 100vw" className="bw-img object-cover object-top opacity-90 transition duration-700 group-hover:scale-105" />
                       </div>
-                      <div className="flex items-center justify-between border-t border-white/20 p-4">
-                        <span className="font-medium tracking-[-0.04em]">{project.title}</span>
-                        <span className="mono text-xs text-white/50">{project.type}</span>
+                      <div className="mt-3 flex items-center justify-between gap-4">
+                        <span className="text-lg font-medium tracking-[-0.05em]">{project.title}</span>
+                        <span className="mono text-[10px] uppercase text-black/40">{project.type}</span>
                       </div>
                     </Link>
                   ))}
