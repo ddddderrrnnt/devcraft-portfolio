@@ -1,139 +1,151 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { projects } from "@/lib/projects";
-import { assetPath } from "@/lib/assets";
 
-const nav = [
-  { label: "Главная", href: "/#home" },
-  { label: "Работы", href: "/#projects" },
+const mainNav = [
+  { label: "Кейсы", href: "/projects" },
   { label: "Услуги", href: "/#services" },
   { label: "Процесс", href: "/#process" },
-  { label: "Контакты", href: "/#contact" },
+  { label: "Контакт", href: "/#contact" },
 ];
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+  const toggleMenu = () => setOpen(!open);
 
   return (
     <>
-      <motion.header
-        initial={{ y: -18, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed left-0 right-0 top-0 z-50"
-      >
-        <div className="container-premium py-4">
-          <div className={`flex items-center justify-between border px-4 py-3 transition duration-300 ${scrolled ? "border-white/10 bg-black/80 backdrop-blur-xl" : "border-white/10 bg-black/35 backdrop-blur-sm"}`}>
-            <Link href="/#home" className="flex items-center gap-3" aria-label="DevCraft home">
-              <span className="block size-2 rounded-full bg-white" />
-              <span className="mono text-xs font-semibold uppercase tracking-[0.08em]">DevCraft</span>
-            </Link>
+      {/* Top bar - minimal, black, clean */}
+      <header className="fixed left-0 right-0 top-0 z-50 bg-[#050505]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="container-premium flex h-16 items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="h-2.5 w-2.5 rounded-full bg-white transition group-hover:scale-110" />
+            <span className="font-semibold tracking-[-0.02em] text-lg">DevCraft</span>
+          </Link>
 
-            <nav className="hidden items-center gap-8 mono text-[11px] uppercase tracking-[0.16em] text-white/45 lg:flex">
-              {nav.slice(1).map((item) => (
-                <Link key={item.href} href={item.href} className="transition hover:text-white">
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-
-            <div className="flex items-center gap-2">
-              <Link href="https://t.me/fuckbuild" target="_blank" className="hidden border border-white/10 px-4 py-2 mono text-[11px] uppercase text-white/65 transition hover:border-white hover:bg-white hover:text-black sm:block">
-                Telegram
-              </Link>
-              <button
-                onClick={() => setOpen(true)}
-                className="border border-white/10 px-4 py-2 mono text-[11px] uppercase text-white/80 transition hover:border-white hover:bg-white hover:text-black"
-                aria-label="Открыть меню"
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-8 text-sm text-white/60 md:flex">
+            {mainNav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="transition hover:text-white"
               >
-                Menu
-              </button>
-            </div>
-          </div>
-        </div>
-      </motion.header>
+                {item.label}
+              </Link>
+            ))}
+          </nav>
 
+          {/* Beautiful Burger */}
+          <button
+            onClick={toggleMenu}
+            className="flex h-9 w-9 items-center justify-center rounded-md border border-white/15 hover:border-white/40 transition-all active:scale-[0.985]"
+            aria-label="Меню"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-white/90"
+            >
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      {/* Fullscreen Menu — clean & beautiful */}
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-[80] overflow-y-auto bg-[#f5f5f2] text-black"
+            className="fixed inset-0 z-[100] bg-[#050505] text-white overflow-y-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
           >
-            <div className="container-premium min-h-dvh py-4">
-              <div className="flex items-center justify-between border border-black/10 px-4 py-3">
-                <Link href="/#home" onClick={() => setOpen(false)} className="flex items-center gap-3">
-                  <span className="block size-2 rounded-full bg-black" />
-                  <span className="mono text-xs font-semibold uppercase tracking-[0.08em]">DevCraft</span>
+            <div className="container-premium pt-6 pb-12">
+              {/* Menu Header */}
+              <div className="flex items-center justify-between mb-12">
+                <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-3">
+                  <div className="h-2.5 w-2.5 rounded-full bg-white" />
+                  <span className="font-semibold tracking-[-0.02em] text-xl">DevCraft</span>
                 </Link>
-                <button onClick={() => setOpen(false)} className="mono text-[11px] uppercase text-black/55 underline underline-offset-4 hover:text-black">
-                  Close
+
+                <button
+                  onClick={() => setOpen(false)}
+                  className="text-sm text-white/60 hover:text-white transition"
+                >
+                  Закрыть
                 </button>
               </div>
 
-              <div className="grid gap-10 py-10 lg:grid-cols-[.92fr_1.08fr] lg:py-16">
-                <div>
-                  <p className="label-dark mb-8">Navigation</p>
-                  <div className="space-y-2">
-                    {nav.map((item, index) => (
-                      <motion.div
-                        key={item.href}
-                        initial={{ y: 24, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: 12, opacity: 0 }}
-                        transition={{ delay: index * 0.04, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                      >
-                        <Link href={item.href} onClick={() => setOpen(false)} className="group grid grid-cols-[3.5rem_1fr] items-baseline border-b border-black/10 py-4">
-                          <span className="mono text-xs text-black/35">{String(index + 1).padStart(2, "0")}</span>
-                          <span className="text-6xl font-medium leading-none tracking-[-0.085em] transition group-hover:translate-x-2 sm:text-8xl">
-                            {item.label}
-                          </span>
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </div>
+              {/* Navigation Links */}
+              <div className="space-y-1 mb-16">
+                {mainNav.map((item, index) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className="block group py-3 text-4xl font-medium tracking-[-1.5px] transition hover:text-white/60"
+                  >
+                    {item.label}
+                    <span className="ml-3 text-white/20 group-hover:text-white/40 transition">→</span>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Projects Preview in Menu — ONLY way to access cases */}
+              <div>
+                <div className="flex items-baseline justify-between mb-6">
+                  <p className="text-xs uppercase tracking-[2px] text-white/40">КЕЙСЫ</p>
+                  <Link href="/projects" onClick={() => setOpen(false)} className="text-xs uppercase tracking-widest text-white/50 hover:text-white">
+                    Все кейсы →
+                  </Link>
                 </div>
 
-                <motion.div
-                  initial={{ x: 24, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: 16, opacity: 0 }}
-                  transition={{ duration: 0.65, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                  className="grid gap-4 sm:grid-cols-2"
-                >
-                  {projects.slice(0, 4).map((project, index) => (
-                    <Link key={project.slug} href={`/projects/${project.slug}`} onClick={() => setOpen(false)} className={`group border border-black/10 bg-white p-3 ${index === 0 ? "sm:col-span-2" : ""}`}>
-                      <div className="relative aspect-[16/9] overflow-hidden bg-black">
-                        <Image src={assetPath(project.screenshot)} alt={project.title} fill sizes="(min-width: 1024px) 580px, 100vw" className="bw-img object-cover object-top opacity-90 transition duration-700 group-hover:scale-105" />
-                      </div>
-                      <div className="mt-3 flex items-center justify-between gap-4">
-                        <span className="text-lg font-medium tracking-[-0.05em]">{project.title}</span>
-                        <span className="mono text-[10px] uppercase text-black/40">{project.type}</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-8">
+                  {projects.slice(0, 6).map((project) => (
+                    <Link
+                      key={project.slug}
+                      href={`/projects/${project.slug}`}
+                      onClick={() => setOpen(false)}
+                      className="group block border-b border-white/10 pb-4"
+                    >
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <p className="text-xl font-medium tracking-tight group-hover:underline">{project.title}</p>
+                          <p className="text-sm text-white/50 mt-1">{project.type}</p>
+                        </div>
+                        <span className="text-xs text-white/30 mt-1 font-mono">{project.year}</span>
                       </div>
                     </Link>
                   ))}
-                </motion.div>
+                </div>
+              </div>
+
+              {/* Bottom contact */}
+              <div className="mt-16 pt-8 border-t border-white/10">
+                <p className="text-sm text-white/50">Готов обсудить проект?</p>
+                <a 
+                  href="https://t.me/fuckbuild" 
+                  target="_blank" 
+                  className="inline-block mt-2 text-lg font-medium hover:underline"
+                >
+                  Написать в Telegram →
+                </a>
               </div>
             </div>
           </motion.div>
