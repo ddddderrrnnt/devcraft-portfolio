@@ -1,25 +1,34 @@
-# DevCraft — premium portfolio
+# DevCraft — monochrome portfolio
 
-Премиальный сайт-портфолио разработчика на Next.js, React, TypeScript, TailwindCSS, Framer Motion, GSAP, Lenis и Three.js.
+Самописный чёрно-белый сайт-портфолио на Next.js, React, TypeScript, TailwindCSS, Framer Motion, GSAP и Lenis.
+
+## Направление дизайна
+
+- Swiss / International Typographic.
+- Чёрный и белый без цветовых акцентов.
+- Строгая сетка, крупная типографика, моноширинные индексы.
+- Реальные скриншоты проектов в grayscale.
+- Без шаблонных блоков и декоративного шума.
 
 ## Что реализовано
 
-- Главная страница с премиальным dark/gold UI.
-- Hero-блок с интерактивным стеклянным 3D-объектом на Three.js.
-- Плавный scroll через Lenis.
-- Reveal-анимации через Framer Motion и GSAP ScrollTrigger.
-- Минималистичная шапка и полноэкранное нестандартное меню с превью проектов.
-- Разделы: Работы, Услуги, Процесс, Технологии, FAQ, Контакты.
-- Реальные карточки проектов со скриншотами, favicon и цветовыми палитрами, полученными с сайтов:
-  - https://helpler.ru
-  - https://nutritionalcouch.ru
-  - https://нутришенкоуч.рф
-  - http://propeptide.su
-  - https://t.me/Edanafoto_bot
-  - https://t.me/GormonGid_bot
+- Главная страница.
+- Fullscreen menu с индексной навигацией и превью проектов.
+- Разделы: работы, услуги, процесс, стек, FAQ, контакты.
+- Реальные карточки проектов со скриншотами и favicon.
 - Отдельные страницы кейсов `/projects/[slug]`.
 - SEO: metadata, sitemap, robots.
-- Полная адаптивность.
+- Static export для GitHub Pages.
+- Адаптивность под desktop/mobile.
+
+## Проекты
+
+- Helpler
+- Nutritional Couch
+- Нутришен Коуч
+- ProPeptide
+- EdanaFoto Bot
+- Gormon Gid Bot
 
 ## Запуск
 
@@ -34,14 +43,6 @@ npm run dev
 
 ```bash
 npm run build
-npm run start
 ```
 
-## Основные файлы
-
-- `app/page.tsx` — главная страница.
-- `app/projects/[slug]/page.tsx` — страницы кейсов.
-- `lib/projects.ts` — данные проектов.
-- `components/header.tsx` — шапка и fullscreen menu.
-- `components/hero-object.tsx` — 3D-объект.
-- `app/globals.css` — глобальная дизайн-система.
+Static export будет в `out`.

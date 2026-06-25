@@ -8,24 +8,24 @@ import { Footer } from "@/components/footer";
 export const metadata: Metadata = {
   metadataBase: new URL("https://devcraft.dev"),
   title: {
-    default: "DevCraft — премиальная разработка сайтов, Telegram-ботов и AI-решений",
+    default: "DevCraft — самописные сайты, Telegram-сервисы и backend",
     template: "%s — DevCraft",
   },
   description:
-    "Создаю цифровые продукты, которые работают на бизнес: сайты, Telegram-боты, AI-агенты, автоматизации и интеграции.",
+    "Проектирование и разработка цифровых продуктов вручную: сайты, Telegram-сервисы, backend, интеграции и автоматизация бизнес-процессов.",
   keywords: [
-    "Next.js разработчик",
-    "Telegram bot developer",
-    "AI agents",
     "full-stack разработка",
-    "премиальный сайт",
+    "разработка сайтов",
+    "Telegram bot developer",
+    "backend разработка",
     "автоматизация бизнеса",
+    "Next.js разработчик",
   ],
   authors: [{ name: "DevCraft" }],
   creator: "DevCraft",
   openGraph: {
-    title: "DevCraft — цифровые продукты, которые работают на бизнес",
-    description: "Премиальная full-stack разработка сайтов, Telegram-ботов и AI-решений.",
+    title: "DevCraft — самописные цифровые продукты",
+    description: "Сайты, Telegram-сервисы, backend, интеграции и сопровождение.",
     type: "website",
     locale: "ru_RU",
     siteName: "DevCraft",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#070707",
+  themeColor: "#050505",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
@@ -45,7 +45,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru" className="bg-noir">
+    <html lang="ru" className="bg-[#050505]">
       <body>
         <SmoothScroll />
         <CursorGlow />

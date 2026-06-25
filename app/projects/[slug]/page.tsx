@@ -3,8 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { GsapEffects } from "@/components/gsap-effects";
-import { ArrowRight, ArrowUpRight, Spark } from "@/components/icons";
-import { PremiumButton } from "@/components/premium-button";
 import { Reveal } from "@/components/reveal";
 import { getProject, projects } from "@/lib/projects";
 import { assetPath } from "@/lib/assets";
@@ -36,135 +34,135 @@ export default async function ProjectPage({ params }: Props) {
   const project = getProject(slug);
   if (!project) notFound();
 
-  const nextProject = projects[(projects.findIndex((item) => item.slug === slug) + 1) % projects.length];
+  const currentIndex = projects.findIndex((item) => item.slug === slug);
+  const nextProject = projects[(currentIndex + 1) % projects.length];
 
   return (
-    <main className="overflow-hidden pt-28 sm:pt-36">
+    <main className="overflow-hidden bg-[#050505] pt-28 text-white sm:pt-36">
       <GsapEffects />
 
-      <section className="container-premium relative pb-14 sm:pb-20">
-        <div className="absolute left-1/2 top-4 -z-10 h-[36rem] w-[60rem] -translate-x-1/2 rounded-full opacity-40 blur-[150px]" style={{ background: project.accent }} />
-
+      <section className="container-premium pb-12 sm:pb-20">
         <Reveal>
-          <Link href="/#projects" className="mb-8 inline-flex items-center gap-2 text-sm text-white/50 transition hover:text-champagne">
-            <ArrowRight className="size-4 rotate-180" /> Назад к проектам
+          <Link href="/#projects" className="mono mb-8 inline-flex text-xs uppercase text-white/50 underline underline-offset-4 hover:text-white">
+            ← Все проекты
           </Link>
         </Reveal>
 
-        <div className="grid gap-10 lg:grid-cols-[.78fr_1.22fr] lg:items-end">
+        <div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
           <div>
             <Reveal>
-              <div className="mb-7 flex flex-wrap items-center gap-3">
-                <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs uppercase tracking-[0.22em] text-champagne">
-                  <Spark className="size-3" /> {project.type}
-                </span>
-                <span className="rounded-full border border-white/10 bg-white/[.035] px-4 py-2 text-xs text-white/50">{project.year}</span>
+              <div className="grid grid-cols-[5rem_1fr] border-y border-white/20 py-4 mono text-xs uppercase text-white/50 sm:grid-cols-[8rem_1fr]">
+                <span>{String(currentIndex + 1).padStart(2, "0")}</span>
+                <span>{project.type} / {project.year}</span>
               </div>
-              <h1 className="text-[16vw] font-medium leading-[.88] tracking-[-0.1em] text-white sm:text-7xl lg:text-8xl xl:text-9xl">
+              <h1 className="mt-8 text-[18vw] font-semibold leading-[.82] tracking-[-0.11em] sm:text-8xl lg:text-[8.5rem]">
                 {project.title}
               </h1>
-              <p className="mt-7 max-w-xl text-base leading-8 text-white/60 sm:text-lg">{project.description}</p>
+              <p className="mt-7 max-w-2xl text-xl leading-8 tracking-[-0.045em] text-white/65 sm:text-2xl sm:leading-9">
+                {project.description}
+              </p>
             </Reveal>
 
-            <Reveal delay={0.12}>
+            <Reveal delay={0.1}>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <PremiumButton href={project.url} target="_blank">Открыть проект</PremiumButton>
-                <PremiumButton href="https://t.me/fuckbuild" target="_blank" variant="dark">Обсудить похожий</PremiumButton>
+                <Link href={project.url} target="_blank" className="border border-white bg-white px-6 py-4 mono text-xs uppercase text-black transition hover:bg-transparent hover:text-white">
+                  Открыть проект →
+                </Link>
+                <Link href="https://t.me/fuckbuild" target="_blank" className="border border-white/25 px-6 py-4 mono text-xs uppercase text-white transition hover:bg-white hover:text-black">
+                  Обсудить похожий →
+                </Link>
               </div>
             </Reveal>
           </div>
 
-          <Reveal delay={0.1}>
-            <div className="glass relative overflow-hidden rounded-[2.4rem] p-3 sm:p-4">
-              <div className="relative aspect-[16/10] overflow-hidden rounded-[1.8rem] bg-white/[.03]">
+          <Reveal delay={0.08}>
+            <div className="border border-white/20 p-4">
+              <div className="mb-4 flex justify-between mono text-xs uppercase text-white/45">
+                <span>Live capture</span>
+                <span>Grayscale preview</span>
+              </div>
+              <div className="relative aspect-[16/10] overflow-hidden bg-white/5">
                 <Image
                   src={assetPath(project.screenshot)}
                   alt={`${project.title} screenshot`}
                   fill
                   priority
-                  sizes="(min-width: 1024px) 760px, 100vw"
-                  className="object-cover object-top"
+                  sizes="(min-width: 1024px) 780px, 100vw"
+                  className="bw-img object-cover object-top"
                 />
-                <div className="absolute inset-0 ring-1 ring-inset ring-white/10" />
-              </div>
-              <div className="absolute left-7 top-7 flex gap-2">
-                {project.colors.map((color) => (
-                  <span key={color} className="size-3 rounded-full border border-white/25" style={{ backgroundColor: color }} />
-                ))}
               </div>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <section className="container-premium py-12 sm:py-16">
-        <Reveal>
-          <div className="glass grid rounded-[2rem] md:grid-cols-3">
-            {project.metrics.map((metric) => (
-              <div key={metric.label} className="border-white/10 p-8 text-center md:border-l first:md:border-l-0">
-                <div className="gold-text text-4xl font-medium tracking-[-0.06em]">{metric.value}</div>
-                <div className="mt-2 text-sm text-white/50">{metric.label}</div>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-      </section>
-
-      <section className="container-premium py-12 sm:py-20">
-        <div className="grid gap-5 lg:grid-cols-3">
-          {[
-            ["Задача", project.task],
-            ["Решение", project.solution],
-            ["Результат", project.result],
-          ].map(([title, text], index) => (
-            <Reveal key={title} delay={index * 0.07}>
-              <article className="glass h-full rounded-[2rem] p-7 sm:p-8">
-                <span className="mb-8 inline-flex size-11 items-center justify-center rounded-2xl border border-gold/20 bg-gold/10 text-sm text-champagne">0{index + 1}</span>
-                <h2 className="text-2xl font-medium tracking-[-0.05em] text-white">{title}</h2>
-                <p className="mt-4 text-sm leading-7 text-white/50">{text}</p>
-              </article>
-            </Reveal>
-          ))}
+      <section className="invert-section py-12 sm:py-16">
+        <div className="container-premium">
+          <Reveal>
+            <div className="grid gap-px bg-black/20 md:grid-cols-3">
+              {project.metrics.map((metric) => (
+                <div key={metric.label} className="bg-[#f4f4f1] p-8 text-center">
+                  <div className="mono text-5xl tracking-[-0.08em]">{metric.value}</div>
+                  <div className="mt-3 mono text-xs uppercase text-black/45">{metric.label}</div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="container-premium py-12 sm:py-20">
-        <div className="grid gap-8 lg:grid-cols-[.72fr_1fr] lg:items-start">
+      <section className="invert-section py-12 sm:py-20">
+        <div className="container-premium">
+          <div className="border-t border-black/20">
+            {[
+              ["Задача", project.task],
+              ["Решение", project.solution],
+              ["Результат", project.result],
+            ].map(([title, text], index) => (
+              <Reveal key={title} delay={index * 0.05}>
+                <article className="grid gap-5 border-b border-black/20 py-8 lg:grid-cols-[9rem_.45fr_1fr]">
+                  <span className="mono text-sm text-black/45">0{index + 1}</span>
+                  <h2 className="text-4xl font-semibold tracking-[-0.08em]">{title}</h2>
+                  <p className="max-w-3xl text-base leading-7 text-black/60">{text}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 sm:py-20">
+        <div className="container-premium grid gap-8 lg:grid-cols-[.65fr_1fr]">
           <Reveal>
-            <span className="section-kicker">Visual system</span>
-            <h2 className="h2-premium">Реальные экраны проекта, упакованные как кейс.</h2>
-            <p className="mt-6 max-w-lg text-base leading-8 text-white/50">
-              Скриншоты получены с реальных адресов проекта. В кейсе они используются без стоковых изображений и случайных мокапов.
+            <span className="section-label">Screens / System</span>
+            <h2 className="h2-system mt-4">Единая подача без цветового шума.</h2>
+            <p className="body-system mt-6 max-w-lg">
+              Для портфолио экраны намеренно сведены в монохром: фокус остаётся на структуре, сетке и качестве реализации.
             </p>
           </Reveal>
-          <div className="grid gap-5">
+
+          <div className="grid gap-4">
             <Reveal delay={0.1}>
-              <div className="glass overflow-hidden rounded-[2rem] p-3">
-                <div className="relative aspect-[16/9] overflow-hidden rounded-[1.5rem]">
-                  <Image src={assetPath(project.screenshot)} alt={`${project.title} wide preview`} fill sizes="(min-width: 1024px) 760px, 100vw" className="object-cover object-top" />
+              <div className="border border-white/20 p-4">
+                <div className="relative aspect-[16/9] overflow-hidden bg-white/5">
+                  <Image src={assetPath(project.screenshot)} alt={`${project.title} wide preview`} fill sizes="(min-width: 1024px) 800px, 100vw" className="bw-img object-cover object-top" />
                 </div>
               </div>
             </Reveal>
-            <div className="grid gap-5 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2">
               <Reveal delay={0.14}>
-                <div className="glass overflow-hidden rounded-[2rem] p-3">
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
-                    <Image src={assetPath(project.screenshot)} alt={`${project.title} cropped preview`} fill sizes="(min-width: 768px) 380px, 100vw" className="object-cover object-left-top" />
+                <div className="border border-white/20 p-4">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-white/5">
+                    <Image src={assetPath(project.screenshot)} alt={`${project.title} crop`} fill sizes="(min-width: 768px) 400px, 100vw" className="bw-img object-cover object-left-top" />
                   </div>
                 </div>
               </Reveal>
               <Reveal delay={0.18}>
-                <div className="glass-gold flex h-full min-h-[320px] flex-col justify-between rounded-[2rem] p-7">
+                <div className="flex min-h-[320px] flex-col justify-between border border-white/20 p-6">
+                  <p className="section-label">Build notes</p>
                   <div>
-                    <p className="text-xs uppercase tracking-[0.24em] text-white/40">Palette</p>
-                    <div className="mt-5 grid grid-cols-2 gap-3">
-                      {project.colors.map((color) => (
-                        <div key={color} className="rounded-2xl border border-white/10 p-3">
-                          <div className="h-20 rounded-xl" style={{ backgroundColor: color }} />
-                          <div className="mt-3 font-mono text-xs text-white/50">{color}</div>
-                        </div>
-                      ))}
-                    </div>
+                    <h3 className="text-4xl font-semibold tracking-[-0.08em]">{project.type}</h3>
+                    <p className="mt-4 text-sm leading-6 text-white/55">{project.short}</p>
                   </div>
                 </div>
               </Reveal>
@@ -173,42 +171,41 @@ export default async function ProjectPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="container-premium py-12 sm:py-20">
-        <Reveal>
-          <div className="glass rounded-[2rem] p-8 sm:p-10">
-            <div className="grid gap-8 lg:grid-cols-[.6fr_1fr] lg:items-center">
+      <section className="invert-section py-12 sm:py-20">
+        <div className="container-premium">
+          <Reveal>
+            <div className="grid gap-8 border-y border-black/20 py-8 lg:grid-cols-[.5fr_1fr] lg:items-center">
               <div>
-                <span className="section-kicker">Stack</span>
-                <h2 className="text-4xl font-medium leading-none tracking-[-0.07em] text-white sm:text-5xl">Использованные технологии</h2>
+                <span className="section-label-dark">Stack / Services</span>
+                <h2 className="mt-4 text-5xl font-semibold leading-[.9] tracking-[-0.08em] sm:text-7xl">Что использовано</h2>
               </div>
-              <div className="flex flex-wrap gap-3">
-                {project.technologies.map((tech) => (
-                  <span key={tech} className="rounded-2xl border border-white/10 bg-white/[.035] px-5 py-3 text-sm text-white/60">{tech}</span>
-                ))}
-                {project.services.map((service) => (
-                  <span key={service} className="rounded-2xl border border-gold/25 bg-gold/10 px-5 py-3 text-sm text-champagne">{service}</span>
+              <div className="flex flex-wrap gap-2">
+                {[...project.technologies, ...project.services].map((item) => (
+                  <span key={item} className="border border-black/20 px-4 py-3 mono text-xs uppercase text-black/65">
+                    {item}
+                  </span>
                 ))}
               </div>
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </section>
 
-      <section className="container-premium py-14 sm:py-24">
-        <Reveal>
-          <Link href={`/projects/${nextProject.slug}`} className="group glass-gold relative block overflow-hidden rounded-[2.4rem] p-8 sm:p-12">
-            <div className="absolute right-0 top-0 h-full w-1/2 opacity-35">
-              <Image src={assetPath(nextProject.screenshot)} alt={nextProject.title} fill sizes="50vw" className="object-cover object-top" />
-              <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
-            </div>
-            <div className="relative z-10 max-w-2xl">
-              <p className="mb-5 text-xs uppercase tracking-[0.28em] text-white/40">Следующий кейс</p>
-              <h2 className="text-5xl font-medium tracking-[-0.08em] text-white sm:text-7xl">{nextProject.title}</h2>
-              <p className="mt-5 max-w-lg text-sm leading-7 text-white/50">{nextProject.short}</p>
-              <span className="mt-8 inline-flex items-center gap-3 text-champagne">Смотреть кейс <ArrowUpRight className="size-5 transition group-hover:translate-x-1 group-hover:-translate-y-1" /></span>
-            </div>
-          </Link>
-        </Reveal>
+      <section className="py-14 sm:py-24">
+        <div className="container-premium">
+          <Reveal>
+            <Link href={`/projects/${nextProject.slug}`} className="group grid gap-6 border-y border-white/20 py-8 lg:grid-cols-[.7fr_1fr] lg:items-end">
+              <div>
+                <p className="section-label">Следующий кейс</p>
+                <h2 className="mt-4 text-[16vw] font-semibold leading-[.82] tracking-[-0.1em] sm:text-8xl">{nextProject.title}</h2>
+              </div>
+              <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
+                <p className="body-system max-w-xl">{nextProject.short}</p>
+                <span className="mono text-xs uppercase text-white transition group-hover:translate-x-1">Смотреть →</span>
+              </div>
+            </Link>
+          </Reveal>
+        </div>
       </section>
     </main>
   );
