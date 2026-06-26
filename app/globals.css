@@ -3,17 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --black: #050505;
-  --white: #f5f5f2;
-  --line: rgba(255, 255, 255, 0.12);
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 * { box-sizing: border-box; }
 
 html {
   background: #050505;
-  color-scheme: dark;
 }
 
 body {
@@ -24,72 +20,22 @@ body {
   font-family: var(--font-sans);
   letter-spacing: -0.015em;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-::selection {
-  background: #fff;
-  color: #050505;
 }
 
 a { color: inherit; text-decoration: none; }
 
-button { -webkit-tap-highlight-color: transparent; }
-
-/* Clean container */
 .container-premium {
-  @apply mx-auto w-full max-w-[1200px] px-5 sm:px-8 lg:px-10;
+  @apply mx-auto w-full max-w-[1080px] px-5 sm:px-8;
 }
 
-/* Beautiful minimal typography */
-h1, h2, .display-xl, .display-lg {
-  font-weight: 600;
-  letter-spacing: -0.035em;
-  line-height: 1.05;
-}
-
-.display-xl {
-  font-size: clamp(3.2rem, 9vw, 5.8rem);
-}
-
-.display-lg {
-  font-size: clamp(2.1rem, 5vw, 3.4rem);
-}
-
-/* Clean section headers */
-.section-label {
-  font-size: 12px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  opacity: 0.45;
-}
-
-/* Soft, premium scroll (Lenis) */
+/* Soft premium scroll */
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
 
-/* Minimal card styles */
-.case-card {
-  border: 1px solid rgba(255,255,255,0.08);
-  transition: border-color 0.2s ease, transform 0.2s ease;
-}
-.case-card:hover {
-  border-color: rgba(255,255,255,0.3);
-  transform: translateY(-1px);
-}
-
-/* Clean button */
+/* Clean minimal button */
 .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 22px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  border: 1px solid rgba(255,255,255,0.18);
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 .btn:hover {
   background: white;
@@ -97,34 +43,11 @@ h1, h2, .display-xl, .display-lg {
   border-color: white;
 }
 
-.btn-white {
-  background: white;
-  color: #050505;
-  border-color: white;
+/* Case list styling */
+.case-item {
+  transition: all 0.2s ease;
 }
-.btn-white:hover {
-  background: #f5f5f2;
-  border-color: #f5f5f2;
-}
-
-/* Subtle animations */
-.fade-in {
-  animation: fadeIn 0.6s ease forwards;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Remove all previous heavy effects */
-.bw-img {
-  filter: grayscale(0.95);
-}
-
-/* Menu burger icon */
-.burger {
-  transition: transform 0.2s ease;
-}
-.burger:hover {
-  transform: scale(1.05);
+.case-item:hover {
+  border-color: rgba(255,255,255,0.35);
+  transform: translateY(-1px);
 }
